@@ -1,22 +1,29 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageOS\AsyncEventsAdminUi\Ui\Source;
 
-class Notifiers implements \Magento\Framework\Option\ArrayInterface
+use \MageOS\AsyncEvents\Service\AsyncEvent\NotifierFactoryInterface;
+
+class Notifiers implements \Magento\Framework\Data\OptionSourceInterface
 {
+    public function __construct(private readonly NotifierFactoryInterface $notifierFactory) {}
+
     /**
-     * Options are hard coded since this module only support HTTP
-     *
      * @return array[]
      */
     public function toOptionArray()
     {
-        return [
-            [
-                'value' => 'http',
-                'label' => 'HTTP',
-            ]
-        ];
+        $options = [];
+
+        foreach ($this->notifierFactory->getSinks() as $sink) {
+            $options[] = [
+                'value' => $sink,
+                'label' => $sink,
+            ];
+        }
+
+        return $options;
     }
 }
