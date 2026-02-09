@@ -5,7 +5,7 @@
   "require": {
     "php":  ">=8.1",
     "magento/framework": "*",
-    "mage-os/mageos-async-events": "*"
+    "mage-os/mageos-async-events": "^4.0.2"
   },
   "repositories": [
     {
